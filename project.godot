@@ -1,0 +1,60 @@
+; Engine configuration file.
+; Prefer editing this file through the Godot editor.
+config_version=5
+
+[application]
+config/name="Hallowed Be Thy Name"
+run/main_scene="res://features/ui/main_menu.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+
+[autoload]
+SaveGame="*res://core/save_game.gd"
+AudioManager="*res://core/audio_manager.gd"
+
+[audio]
+default_bus_layout="res://default_bus_layout.tres"
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[input]
+
+move_left={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":65), Object(InputEventKey,"physical_keycode":4194321)]
+}
+move_right={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":68), Object(InputEventKey,"physical_keycode":4194323)]
+}
+jump={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":32)]
+}
+dash={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":4194325)]
+}
+attack={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":74), Object(InputEventMouseButton,"button_index":1)]
+}
+grapple={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":69), Object(InputEventMouseButton,"button_index":2)]
+}
+
+[layer_names]
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemies"
+2d_physics/layer_4="GrappleAnchors"
+2d_physics/layer_5="PlayerHurtbox"
+2d_physics/layer_6="EnemyHurtbox"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false

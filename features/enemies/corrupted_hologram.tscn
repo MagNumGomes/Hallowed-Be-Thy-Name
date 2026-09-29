@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://features/enemies/enemy_base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://features/enemies/corrupted_hologram.gd" id="2_hologram"]
+
+[node name="CorruptedHologram" instance=ExtResource("1_base")]
+script = ExtResource("2_hologram")
+max_health = 40.0
+vision_radius = 520.0
+gravity = 0.0
+
+[node name="Placeholder" parent="Visuals" index="0"]
+polygon = PackedVector2Array(0, -19, 12, -7, 9, 16, -9, 16, -12, -7)
+color = Color(0.15, 0.95, 1, 1)
+
+[node name="Facing" parent="Visuals" index="1"]
+color = Color(1, 0.2, 0.8, 1)

@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3]
+[ext_resource type="Script" path="res://world/levels/ui_demo.gd" id="1"]
+[ext_resource type="PackedScene" path="res://features/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://features/ui/hud.tscn" id="3"]
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(1280, 80)
+[sub_resource type="CircleShape2D" id="FragmentShape"]
+radius = 24.0
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(40, 1200)
+
+[node name="UIDemo" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(640, 640)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("FloorShape")
+[node name="Visual" type="Polygon2D" parent="Floor"]
+polygon = PackedVector2Array(-640, -40, 640, -40, 640, 40, -640, 40)
+color = Color(0.19, 0.22, 0.23, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-20, 200)
+[node name="Shape" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("WallShape")
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(1300, 200)
+[node name="Shape" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("WallShape")
+
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(280, 540)
+
+[node name="Fragment" type="Area2D" parent="."]
+position = Vector2(600, 572)
+collision_layer = 0
+collision_mask = 2
+[node name="Shape" type="CollisionShape2D" parent="Fragment"]
+shape = SubResource("FragmentShape")
+[node name="Visual" type="Polygon2D" parent="Fragment"]
+polygon = PackedVector2Array(0, -16, 12, 0, 0, 16, -12, 0)
+color = Color(0.35, 0.7, 0.69, 1)
+
+[node name="HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3")]
+player = NodePath("../Player")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+layer = 101
+[node name="Help" type="Label" parent="Interface"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -64.0
+offset_right = -24.0
+offset_bottom = -16.0
+autowrap_mode = 2
+mouse_filter = 2

@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://features/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://core/state_machine/state_machine.gd" id="2_machine"]
+[ext_resource type="Script" path="res://features/player/states/idle_state.gd" id="3_idle"]
+[ext_resource type="Script" path="res://features/player/states/run_state.gd" id="4_run"]
+[ext_resource type="Script" path="res://features/player/states/jump_state.gd" id="5_jump"]
+[ext_resource type="Script" path="res://features/player/states/dash_state.gd" id="6_dash"]
+[ext_resource type="Script" path="res://features/player/states/attack_state.gd" id="7_attack"]
+[ext_resource type="Script" path="res://features/combat/components/hitbox.gd" id="8_hitbox"]
+[ext_resource type="Script" path="res://features/combat/components/hurtbox.gd" id="9_hurtbox"]
+[ext_resource type="Script" path="res://features/prosthetics/components/grappling_hook_prosthetic.gd" id="10_hook"]
+
+[sub_resource type="CapsuleShape2D" id="Capsule_player"]
+radius = 10.0
+height = 32.0
+
+[sub_resource type="RectangleShape2D" id="Sword_shape"]
+size = Vector2(42, 32)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "sword_hitbox", "hurtbox", "grappling_hook") groups=["player"]]
+collision_layer = 2
+collision_mask = 1
+floor_snap_length = 4.0
+script = ExtResource("1_player")
+state_machine = NodePath("StateMachine")
+sword_hitbox = NodePath("SwordHitbox")
+hurtbox = NodePath("Hurtbox")
+grappling_hook = NodePath("ProstheticSlots/GrapplingHook")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Capsule_player")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Placeholder" type="Polygon2D" parent="Visuals"]
+polygon = PackedVector2Array(-10, -16, 10, -16, 10, 16, -10, 16)
+color = Color(0.35, 0.8, 0.95, 1)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_machine")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_idle")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_run")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("5_jump")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("6_dash")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("7_attack")
+
+[node name="SwordHitbox" type="Area2D" parent="." node_paths=PackedStringArray("source")]
+position = Vector2(30, 0)
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+script = ExtResource("8_hitbox")
+source = NodePath("..")
+team = &"player"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox"]
+shape = SubResource("Sword_shape")
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("receiver")]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("9_hurtbox")
+receiver = NodePath("..")
+team = &"player"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("Capsule_player")
+
+[node name="GrappleCable" type="Line2D" parent="."]
+visible = false
+width = 2.0
+default_color = Color(0.4, 0.9, 1, 1)
+
+[node name="ProstheticSlots" type="Node" parent="."]
+
+[node name="GrapplingHook" type="Node" parent="ProstheticSlots" node_paths=PackedStringArray("carrier", "cable")]
+script = ExtResource("10_hook")
+carrier = NodePath("../..")
+cable = NodePath("../../GrappleCable")
