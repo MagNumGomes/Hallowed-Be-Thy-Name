@@ -1,0 +1,43 @@
+# Godot 4: cache do editor, imports processados e dados locais.
+.godot/
+
+# Manter versionados: *.import (opções de importação), *.uid,
+# project.godot, export_presets.cfg, cenas, recursos e assets originais.
+
+# Exportações locais: guardar todos os builds nestas pastas.
+build/
+builds/
+dist/
+export/
+exports/
+
+# Credenciais de exportação (versões antigas e atuais do Godot 4).
+export_credentials.cfg
+.godot/export_credentials.cfg
+*.keystore
+*.jks
+
+# Godot: traduções geradas e configuração local do editor.
+*.translation
+*.tmp
+*.bak
+*.log
+
+# Godot .NET: caches e resultados de compilação, se utilizado.
+.mono/
+bin/
+obj/
+
+# Editores e ficheiros temporários locais.
+.idea/
+.vs/
+*.swp
+*.swo
+*~
+
+# Arquivos do sistema operacional.
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
