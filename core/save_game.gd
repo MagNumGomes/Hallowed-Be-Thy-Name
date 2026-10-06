@@ -56,7 +56,7 @@ func read_memory() -> Dictionary:
 	return data
 
 
-func save_player(player: Player, scene_path: String) -> Error:
+func save_player(player: Player, scene_path: String, world_state: Dictionary = {}) -> Error:
 	if not is_instance_valid(player) or player.health <= 0 or player.level_transition_active:
 		return ERR_UNAVAILABLE
 	if not ResourceLoader.exists(scene_path, "PackedScene"):
@@ -64,7 +64,7 @@ func save_player(player: Player, scene_path: String) -> Error:
 	var data := {"version": 1, "scene": scene_path,
 		"x": player.global_position.x, "y": player.global_position.y,
 		"health": player.health, "fragments": player.fragments,
-		"durability": player.grappling_hook.get_durability()}
+		"durability": player.grappling_hook.get_durability(), "world": world_state}
 	# Escreve primeiro em arquivo temporário para preservar o slot em caso de falha.
 	var file := FileAccess.open(SAVE_PATH + ".tmp", FileAccess.WRITE)
 	if file == null:

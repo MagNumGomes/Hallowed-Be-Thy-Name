@@ -4,7 +4,7 @@
 
 Jogo 2D de ação e suspense narrativo, com exploração metroidvania e combate inspirado em soulslikes. A primeira demo vertical tem como cenário a **Torre dos Combatentes Esquecidos**.
 
-**Estado da entrega:** sistemas reutilizáveis, gerenciador de nível, HUD e menu principal implementados. F5 abre o menu e uma sala técnica de UI com save/load. A montagem da torre, arte, áudio e sequência narrativa ainda estão pendentes. Consulte [Interface e ancoragem](docs/ui_setup.md).
+**Estado atual:** primeiro percurso jogável da Torre dos Combatentes, com três setores, cinco inimigos, plataformas, gancho, três memórias narrativas e um altar final. Inclui sprites vetoriais originais com animação procedural, cenário de catedral tecnológica, áudio sintetizado, checkpoints e save/load do progresso. Consulte [Guia da torre](docs/tower.md).
 
 ## Implementado
 
@@ -17,10 +17,10 @@ Jogo 2D de ação e suspense narrativo, com exploração metroidvania e combate 
 | Projéteis | Energia com oscilação, vida útil e varredura para evitar atravessar paredes finas |
 | Apresentação | Shaders de memória corrompida e corrosão; controlador de exemplo ligado à durabilidade |
 | Nível | Checkpoints em memória, respawn automático, volumes de queda, portais entre salas da mesma cena, fade de tela, proteção durante transições e glitch por sala |
-| Interface | HUD reativo, aviso de ruptura, fragmentos, menu com glitch, opções e slot JSON; sala técnica executável |
-| Áudio | Autoload, buses Master/BGM/SFX/Glitch, crossfade de exploração/memória e SFX com pitch aleatório; ficheiros sonoros pendentes |
+| Interface | HUD reativo, aviso de ruptura, fragmentos, menu com glitch, opções e slot JSON; torre jogável e sala técnica executável |
+| Áudio | Autoload, buses Master/BGM/SFX/Glitch, crossfade de exploração/memória e SFX com pitch aleatório; torre com ambientes e efeitos sintetizados |
 
-O respawn restaura a vida e limpa ações/recuo; preserva durabilidade e inimigos existentes. Portais preservam vida e checkpoint. Salas de memória sobrepostas usam a maior intensidade. O menu oferece save/load simples em JSON; o gerenciador de nível mantém checkpoints apenas em memória.
+O respawn restaura a vida e limpa ações/recuo; preserva durabilidade e inimigos existentes. O gerenciador mantém checkpoints em memória; a torre também os registra no slot JSON junto aos encontros e relíquias. Santuários novos restauram vida e prótese. Salas de memória sobrepostas usam a maior intensidade.
 
 ## Requisitos e execução
 
@@ -36,7 +36,7 @@ godot --editor --path .
 
 O executável pode se chamar `godot4`; substitua `godot` pelo nome/caminho instalado. No PowerShell, use `& "C:\caminho\Godot_console.exe"` antes dos argumentos.
 
-Use **F5** para o menu e a sala técnica de UI. Para montar a torre, siga [Configuração do jogador](docs/player_setup.md) e a [montagem do nível](MANUAL_DEV.md#10-nível-checkpoints-e-transições), e configure `game_scene` no menu.
+Use **F5 no editor** e escolha iniciar no menu para jogar a torre. Também é possível executar `world/levels/tower.tscn` diretamente com F6. A geometria e os encontros são montados pelo script ao executar a cena.
 
 ### Controles
 
@@ -47,6 +47,9 @@ Use **F5** para o menu e a sala técnica de UI. Para montar a torre, siga [Confi
 | Dash | Shift |
 | Espada | J ou botão esquerdo; novos toques encadeiam o combo |
 | Gancho | E ou botão direito, mirando com o mouse; soltar libera |
+| Portal / altar final | W, perto da porta |
+| Restaurar vida e gancho | R, perto do santuário |
+| Salvar / voltar ao menu | F5 dentro do jogo / Esc |
 
 ## Testes
 
@@ -60,6 +63,7 @@ godot --headless --path . --script res://tests/integration/enemies_test.gd
 godot --headless --path . --script res://tests/integration/level_manager_test.gd
 godot --headless --path . --script res://tests/integration/ui_test.gd
 godot --headless --path . --script res://tests/integration/audio_manager_test.gd
+godot --headless --path . --script res://tests/integration/tower_test.gd
 ```
 
 Cada suíte imprime a quantidade de falhas e retorna **0** em sucesso ou **1** em falha. A importação isolada não substitui testes comportamentais. Os testes usam cenas e colisões reais, sem framework externo. Shaders, composição de camadas e conforto visual precisam também de inspeção no editor com renderização.
@@ -148,10 +152,9 @@ Use GDScript tipado, parâmetros de balanceamento exportados e composição por 
 
 ## Próximos passos da demo
 
-1. Montar a torre com plataformas, âncoras, inimigos e gatilhos.
-2. Instanciar o HUD na torre e adicionar feedback de checkpoint/morte.
-3. Integrar narrativa, arte e áudio; validar efeitos com renderização.
-4. Apontar o menu para a torre e configurar presets de exportação.
+1. Expandir o percurso com novas salas, desafios e chefe.
+2. Refinar animações, variedade ambiental e trilha a partir da direção visual inicial.
+3. Configurar presets de exportação e balancear a experiência com playtests.
 
 ## Licença e créditos
 

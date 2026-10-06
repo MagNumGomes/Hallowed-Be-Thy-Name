@@ -1,7 +1,7 @@
 extends Control
 
 const UI_THEME = preload("res://features/ui/decayed_theme.gd")
-@export_file("*.tscn") var game_scene: String = "res://world/levels/ui_demo.tscn"
+@export_file("*.tscn") var game_scene: String = "res://world/levels/tower.tscn"
 var _opening: bool = false
 
 
